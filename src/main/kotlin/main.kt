@@ -1,14 +1,13 @@
-fun main(args: Array<String>) {
+fun main() {
     val discipline = OOP()
 
     val teacher = Teacher("Сенсей")
     val group = PV_32()
 
-    teacher.startExam(group, discipline)
+    val exam = Exam(discipline)
+    exam.addStudentsGroup(group)
+    exam.addTeacher(teacher)
 
-    val scoreSheet = teacher.getScoreSheet()
-    println("Итоги экзамена:")
-    group.forEach{
-        println("${it.name} получил оценку ${scoreSheet[it.name]}")
-    }
+    exam.start()
+    return
 }

@@ -14,12 +14,32 @@ open class StudentGroup(_name: String) : Iterable<Student>{
             students.iterator()
 }
 
+object University{
+    private var nextStudentID = 0
+
+    fun getNextStudentID(): String{
+        val returnID = nextStudentID
+        nextStudentID += 1
+        return returnID.toString()
+    }
+}
+
 class Student(_name: String, _knowledge: Map<String, String>){
     var name = _name
-    val knowledge = _knowledge
+    val studentID = University.getNextStudentID()
+    val scoreCard = ScoreCard()
+
+    private val knowledge = _knowledge
 
     fun getAnswer(ask: String) =
             knowledge.getOrDefault(ask, "Я не знаю, не бейте, поставьте три.")
+}
+
+class ScoreCard(){
+    private val scores = mutableMapOf<Pair<String, String>, Score>()
+    fun setScore(disciplineName: String, teacherName: String, score: Score){
+        scores[Pair(disciplineName, teacherName)] = score
+    }
 }
 
 class PV_32: StudentGroup("ПВ-32") {

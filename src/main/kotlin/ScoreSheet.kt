@@ -9,10 +9,10 @@ enum class Score{
 class ScoreSheet{
     private val sheet: MutableMap<String, Score> = mutableMapOf()
 
-    fun setScore(studentName: String, score: Score) =
-            sheet.put(studentName, score)
+    fun setScore(studentID: String, score: Score) =
+            sheet.put(studentID, score)
 
-    operator fun get(studentName: String) =
-            sheet[studentName]
+    operator fun get(studentID: String) =
+            sheet[studentID]
 
 }
