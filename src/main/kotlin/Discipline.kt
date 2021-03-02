@@ -1,27 +1,32 @@
 import java.util.*
 
-class ExamTicket(_ask: String, _answer: String ) {
-
-    val ask = _ask
-    val answer = _answer
-
-}
-
-open class Discipline(_name: String) {
+class Discipline(_name: String) {
     val name = _name
 
-    private val tickets = Vector<ExamTicket>()
+    private val tasks = Vector<Task>()
 
-    fun addTicket(ticket: ExamTicket){
-        tickets.addElement(ticket)
+    fun addTask(task: Task) {
+        tasks.addElement(task)
     }
 
-    fun getRandomTicket(): ExamTicket =
-            tickets.random()
+    fun getRandomTask(): Task =
+            tasks.random()
 }
 
-class OOP : Discipline("Объектно Ориентированное Программирование"){
-    init {
-        addTicket(ExamTicket("Что такое Объект", "Это Объект!"))
+interface DisciplineCreator {
+    fun createDiscipline(): Discipline
+}
+
+class OOPCreator : DisciplineCreator {
+    override fun createDiscipline(): Discipline {
+        val newDiscipline = Discipline("Объектно Ориентированное Программирование")
+
+        val ask = TaskElement("Что такое Объект")
+        val answer = TaskElement("Это Объект!")
+        newDiscipline.addTask(Task(ask, answer))
+
+        return newDiscipline
     }
 }
+
+

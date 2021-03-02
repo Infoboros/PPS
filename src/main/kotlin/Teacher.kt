@@ -2,14 +2,14 @@ class Teacher(_name: String) {
     val name = _name
     private val scoreSheet = ScoreSheet()
 
-    fun estimateAnswer(student: Student, ticket: ExamTicket): Score{
-        val studentAnswer = student.getAnswer(ticket.ask)
+    fun estimateStudent(student: Student, task: Task): Score{
+        val studentAnswer = student.getAnswer(task.ask)
 
-        println("На вопрос ${ticket.ask}\n" +
-                "Экзаменуемый дал ответ $studentAnswer")
+        println("На вопрос ${task.ask.text}\n" +
+                "Экзаменуемый дал ответ ${studentAnswer.text}")
 
         val score = when (studentAnswer) {
-            ticket.answer -> Score.A
+            task.answer -> Score.A
             else -> Score.F
         }
 

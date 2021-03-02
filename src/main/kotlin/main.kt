@@ -1,8 +1,8 @@
 fun main() {
-    val discipline = OOP()
+    val discipline = OOPCreator().createDiscipline()
 
     val teacher = Teacher("Сенсей")
-    val group = PV_32()
+    val group = PV32Creator().createGroup()
 
     val exam = Exam(discipline)
     exam.addStudentsGroup(group)

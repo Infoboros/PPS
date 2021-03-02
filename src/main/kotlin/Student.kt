@@ -1,6 +1,27 @@
 import java.util.*
 
-open class StudentGroup(_name: String) : Iterable<Student>{
+class Student(_name: String, _knowledge: Map<TaskElement, TaskElement>) {
+    var name = _name
+    val studentID = University.getStudentID()
+    val scoreCard = ScoreCard()
+
+    private val knowledge = _knowledge
+
+    fun getAnswer(ask: TaskElement) =
+            knowledge.getOrDefault(ask, TaskElement("Я не знаю, не бейте, поставьте три."))
+}
+
+object University {
+    private var nextStudentID = 0
+
+    fun getStudentID(): String {
+        val returnID = nextStudentID
+        nextStudentID += 1
+        return returnID.toString()
+    }
+}
+
+class StudentGroup(_name: String) : Iterable<Student> {
     val name = _name
 
     private val students: Vector<Student> = Vector()
@@ -14,42 +35,29 @@ open class StudentGroup(_name: String) : Iterable<Student>{
             students.iterator()
 }
 
-object University{
-    private var nextStudentID = 0
-
-    fun getNextStudentID(): String{
-        val returnID = nextStudentID
-        nextStudentID += 1
-        return returnID.toString()
-    }
-}
-
-class Student(_name: String, _knowledge: Map<String, String>){
-    var name = _name
-    val studentID = University.getNextStudentID()
-    val scoreCard = ScoreCard()
-
-    private val knowledge = _knowledge
-
-    fun getAnswer(ask: String) =
-            knowledge.getOrDefault(ask, "Я не знаю, не бейте, поставьте три.")
-}
-
-class ScoreCard(){
+class ScoreCard() {
     private val scores = mutableMapOf<Pair<String, String>, Score>()
-    fun setScore(disciplineName: String, teacherName: String, score: Score){
+    fun setScore(disciplineName: String, teacherName: String, score: Score) {
         scores[Pair(disciplineName, teacherName)] = score
     }
 }
 
-class PV_32: StudentGroup("ПВ-32") {
-    init {
-        addStudent(Student("Петр Петрович", mapOf(
-                "Что такое Объект" to "Это Объект!"
+interface StudentGroupCreator {
+    fun createGroup(): StudentGroup
+}
+
+class PV32Creator : StudentGroupCreator {
+    override fun createGroup(): StudentGroup {
+        val newGroup = StudentGroup("ПВ-32")
+
+        newGroup.addStudent(Student("Петр Петрович", mapOf(
+                TaskElement("Что такое Объект") to TaskElement("Это Объект!")
         )))
-        addStudent(Student("Иван Иванов", mapOf(
-                "Зло это?" to "Зло есть зло, меньшее большее, мне нет разницы.\nИ если мне придется выбирать, я не буду делать выбор вовсе"
+        newGroup.addStudent(Student("Иван Иванов", mapOf(
+                TaskElement("Зло это?") to TaskElement("Зло есть зло, меньшее большее, мне нет разницы.\n")
         )))
-        addStudent(Student("Василий Васильев", mapOf()))
+        newGroup.addStudent(Student("Василий Васильев", mapOf()))
+
+        return newGroup
     }
 }

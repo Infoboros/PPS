@@ -22,9 +22,9 @@ class Exam(_discipline: Discipline) {
     private fun examStudent(student: Student, teacher: Teacher){
         println("Начался экзамен у ${student.name}, экзаменует ${teacher.name}")
 
-        val ticket = discipline.getRandomTicket()
+        val ticket = discipline.getRandomTask()
 
-        val score = teacher.estimateAnswer(student, ticket)
+        val score = teacher.estimateStudent(student, ticket)
 
         val scoreCard = student.scoreCard
         scoreCard.setScore(discipline.name, teacher.name, score)
